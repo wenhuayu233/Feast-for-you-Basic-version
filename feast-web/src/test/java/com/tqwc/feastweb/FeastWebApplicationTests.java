@@ -1,10 +1,10 @@
-package com.tqwc.feast;
+package com.tqwc.feastweb;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FeastApplicationTests {
+class FeastWebApplicationTests {
 
     @Test
     void contextLoads() {

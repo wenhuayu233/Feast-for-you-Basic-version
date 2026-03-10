@@ -1,13 +1,13 @@
-package com.tqwc.feast;
+package com.tqwc.feastweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FeastApplication {
+public class FeastWebApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(FeastApplication.class, args);
+        SpringApplication.run(FeastWebApplication.class, args);
     }
 
 }
