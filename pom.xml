@@ -25,6 +25,9 @@
         <!-- 入口模块 -->
         <module>feast-web</module>
 
+        <!-- 通用模块 -->
+        <module>feast-common</module>
+
     </modules>
 
 
