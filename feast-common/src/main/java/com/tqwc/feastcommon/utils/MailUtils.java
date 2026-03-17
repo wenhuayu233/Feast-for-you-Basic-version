@@ -1,9 +1,10 @@
 package com.tqwc.feastcommon.utils;
 
 /**
- * @author 49462
+ * @author Tang
  * @data 2026/3/15 17:40
  */
+
 
 
 import javax.mail.*;
