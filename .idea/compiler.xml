@@ -9,6 +9,7 @@
         <processorPath useClasspath="false">
           <entry name="D:/JAVA-related plugins/maven-repository/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
+        <module name="feast-common" />
         <module name="feast-web" />
       </profile>
     </annotationProcessing>
