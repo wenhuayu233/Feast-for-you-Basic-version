@@ -39,9 +39,7 @@
         <!-- Maven 相关-->
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <!-- mybatisplus 相关-->
-        <mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
-        <mybatisplus.version>2.2.0</mybatisplus.version>
+
 
 
 
@@ -51,11 +49,6 @@
     <dependencyManagement>
         <dependencies>
 
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter</artifactId>
-                <version>4.0.1</version>
-            </dependency>
 
             <!--lombok -->
             <dependency>
@@ -65,12 +58,6 @@
                 <optional>true</optional>
             </dependency>
 
-            <dependency>
-                <groupId>org.mybatis.spring.boot</groupId>
-                <artifactId>mybatis-spring-boot-starter-test</artifactId>
-                <version>4.0.1</version>
-                <scope>test</scope>
-            </dependency>
 
 
             <dependency>
@@ -119,18 +106,7 @@
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
             </dependency>
-            <!--dao层扫描等-->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus</artifactId>
-                <version>${mybatisplus.version}</version>
-            </dependency>
-            <!--yml配置等-->
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatisplus-spring-boot-starter</artifactId>
-                <version>${mybatisplus-spring-boot-starter.version}</version>
-            </dependency>
+
 
             <!--            &lt;!&ndash;mybatis-plus&ndash;&gt;-->
             <!--            <dependency>-->
