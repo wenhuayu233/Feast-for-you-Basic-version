@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -21,9 +22,9 @@ import java.util.Arrays;
 @Aspect
 public class APiOperationLogAspect {
 
-    private static final Logger log = LoggerFactory.getLogger(ApiOperationLogAspect.class);
+    private static final Logger log = LoggerFactory.getLogger(APiOperationLogAspect.class);
 
-    @Around("@annotation(com.xxx.common.aspect.ApiOperationLog)")
+    @Around("@annotation(com.tqwc.feastcommon.aspect.ApiOperationLog)")
     public Object recordLog(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
 
