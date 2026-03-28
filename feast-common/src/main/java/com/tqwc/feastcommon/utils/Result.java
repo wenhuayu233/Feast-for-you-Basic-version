@@ -1,6 +1,6 @@
 package com.tqwc.feastcommon.utils;
 
-import lombok.Data;
+
 
 import java.io.Serializable;
 

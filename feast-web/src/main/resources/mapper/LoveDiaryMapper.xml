@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tqwc.feastweb.mapper.LoveDiaryMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tqwc.feastcommon.entity.LoveDiary">
+        <id column="id" property="id" />
+        <result column="relationship_id" property="relationshipId" />
+        <result column="order_id" property="orderId" />
+        <result column="diary_date" property="diaryDate" />
+        <result column="title" property="title" />
+        <result column="content" property="content" />
+        <result column="image" property="image" />
+        <result column="style_tag" property="styleTag" />
+        <result column="created_by" property="createdBy" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, relationship_id, order_id, diary_date, title, content, image, style_tag, created_by, created_time, updated_time
+    </sql>
+
+</mapper>

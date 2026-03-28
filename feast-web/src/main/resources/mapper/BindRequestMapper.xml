@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tqwc.feastweb.mapper.BindRequestMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tqwc.feastcommon.entity.BindRequest">
+        <id column="id" property="id" />
+        <result column="from_user_id" property="fromUserId" />
+        <result column="to_user_id" property="toUserId" />
+        <result column="message" property="message" />
+        <result column="status" property="status" />
+        <result column="created_time" property="createdTime" />
+        <result column="handled_time" property="handledTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, from_user_id, to_user_id, message, status, created_time, handled_time
+    </sql>
+
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tqwc.feastweb.mapper.RelationshipMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tqwc.feastcommon.entity.Relationship">
+        <id column="id" property="id" />
+        <result column="user1_id" property="user1Id" />
+        <result column="user2_id" property="user2Id" />
+        <result column="relation_code" property="relationCode" />
+        <result column="status" property="status" />
+        <result column="start_date" property="startDate" />
+        <result column="end_date" property="endDate" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user1_id, user2_id, relation_code, status, start_date, end_date, created_time, updated_time
+    </sql>
+
+</mapper>

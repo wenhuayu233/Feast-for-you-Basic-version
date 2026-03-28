@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tqwc.feastweb.mapper.DishMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.tqwc.feastcommon.entity.Dish">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="flavor" property="flavor" />
+        <result column="description" property="description" />
+        <result column="image" property="image" />
+        <result column="created_by" property="createdBy" />
+        <result column="status" property="status" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, name, flavor, description, image, created_by, status, created_time, updated_time
+    </sql>
+
+</mapper>

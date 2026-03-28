@@ -8,6 +8,23 @@ spring:
     url: jdbc:mysql://111.229.181.254:13306/?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: feastforyou123456
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: #你的QQ邮箱
+    password: #你的SMTP授权码
+    protocol: smtp
+    default-encoding: UTF-8
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          timeout: 5000
+          connectiontimeout: 5000
+          writetimeout: 5000
 
 mybatis-plus:
   typeAliasesPackage: com.tqwc.feastweb.entity
@@ -21,3 +38,4 @@ mybatis-plus:
       lazyLoadingEnabled: true #延时加载的开关
       multipleResultSetsEnabled: true #开启延时加载，否则按需加载属性
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
+
