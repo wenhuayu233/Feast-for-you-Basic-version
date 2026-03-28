@@ -1,4 +1,4 @@
-package com.tqwc.feastweb.service;
+package com.tqwc.feastweb.service.impl;
 
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;

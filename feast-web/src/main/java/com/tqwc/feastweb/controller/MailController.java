@@ -1,6 +1,6 @@
 package com.tqwc.feastweb.controller;
 
-import com.tqwc.feastweb.service.MailService;
+import com.tqwc.feastweb.service.impl.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
