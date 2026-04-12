@@ -22,4 +22,9 @@ public class GlobalExceptionHandler {
     public Result handleConstraintViolation(ConstraintViolationException e) {
         return new Result(StatusCode.ERROR, e.getMessage());
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public Result handleIllegalArgument(IllegalArgumentException e) {
+        return new Result(StatusCode.ERROR, e.getMessage());
+    }
 }

@@ -1,6 +1,6 @@
 package com.tqwc.feastweb.config;
 
-import com.tqwc.feastweb.security.JwtAuthenticationFilter;
+import com.tqwc.feast.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
