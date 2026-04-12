@@ -1,4 +1,4 @@
-package com.tqwc.feastweb.security;
+package com.tqwc.feast.jwt;
 
 public class JwtUserPrincipal {
     private final Long userId;
