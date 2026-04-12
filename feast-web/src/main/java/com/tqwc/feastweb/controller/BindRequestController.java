@@ -1,6 +1,8 @@
 package com.tqwc.feastweb.controller;
 
 import com.tqwc.feastcommon.entity.BindRequest;
+import com.tqwc.feastcommon.utils.Result;
+import com.tqwc.feastcommon.utils.StatusCode;
 import com.tqwc.feastweb.service.BindRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,14 +43,15 @@ public class BindRequestController {
      * @return 返回操作结果
      */
     @PostMapping("/send")
-    public String sendBindRequest(@RequestParam Long fromUserId,
+    public Result sendBindRequest(@RequestParam Long fromUserId,
                                   @RequestParam Long toUserId,
                                   @RequestParam(required = false) String message) {
 
         // 调用业务层发起绑定申请
         bindRequestService.sendBindRequest(fromUserId, toUserId, message);
 
-        return "绑定申请发送成功";
+        // 返回成功结果
+        return new Result(StatusCode.OK, "绑定申请发送成功");
     }
 
     /**
@@ -58,13 +61,16 @@ public class BindRequestController {
      * GET /bind/request/received?userId=2
      *
      * @param userId 当前用户ID
-     * @return 待处理申请列表
+     * @return 统一返回结果，data 中为待处理申请列表
      */
     @GetMapping("/received")
-    public List<BindRequest> getReceivedPendingRequests(@RequestParam Long userId) {
+    public Result getReceivedPendingRequests(@RequestParam Long userId) {
 
         // 调用业务层查询收到的待处理申请
-        return bindRequestService.getReceivedPendingRequests(userId);
+        List<BindRequest> list = bindRequestService.getReceivedPendingRequests(userId);
+
+        // 返回成功结果，并携带数据
+        return new Result(StatusCode.OK, "查询成功", list);
     }
 
     /**
@@ -74,13 +80,16 @@ public class BindRequestController {
      * GET /bind/request/sent?userId=1
      *
      * @param userId 当前用户ID
-     * @return 发出的申请列表
+     * @return 统一返回结果，data 中为申请列表
      */
     @GetMapping("/sent")
-    public List<BindRequest> getSentRequests(@RequestParam Long userId) {
+    public Result getSentRequests(@RequestParam Long userId) {
 
         // 调用业务层查询发出的申请
-        return bindRequestService.getSentRequests(userId);
+        List<BindRequest> list = bindRequestService.getSentRequests(userId);
+
+        // 返回成功结果，并携带数据
+        return new Result(StatusCode.OK, "查询成功", list);
     }
 
     /**
@@ -91,16 +100,17 @@ public class BindRequestController {
      *
      * @param requestId 申请记录ID
      * @param currentUserId 当前登录用户ID
-     * @return 返回操作结果
+     * @return 统一返回结果
      */
     @PostMapping("/accept/{requestId}")
-    public String acceptRequest(@PathVariable Long requestId,
+    public Result acceptRequest(@PathVariable Long requestId,
                                 @RequestParam Long currentUserId) {
 
         // 调用业务层同意绑定申请
         bindRequestService.acceptRequest(requestId, currentUserId);
 
-        return "绑定申请已同意";
+        // 返回成功结果
+        return new Result(StatusCode.OK, "绑定申请已同意");
     }
 
     /**
@@ -111,16 +121,17 @@ public class BindRequestController {
      *
      * @param requestId 申请记录ID
      * @param currentUserId 当前登录用户ID
-     * @return 返回操作结果
+     * @return 统一返回结果
      */
     @PostMapping("/reject/{requestId}")
-    public String rejectRequest(@PathVariable Long requestId,
+    public Result rejectRequest(@PathVariable Long requestId,
                                 @RequestParam Long currentUserId) {
 
         // 调用业务层拒绝绑定申请
         bindRequestService.rejectRequest(requestId, currentUserId);
 
-        return "绑定申请已拒绝";
+        // 返回成功结果
+        return new Result(StatusCode.OK, "绑定申请已拒绝");
     }
 
     /**
@@ -131,16 +142,17 @@ public class BindRequestController {
      *
      * @param requestId 申请记录ID
      * @param currentUserId 当前登录用户ID
-     * @return 返回操作结果
+     * @return 统一返回结果
      */
     @PostMapping("/cancel/{requestId}")
-    public String cancelRequest(@PathVariable Long requestId,
+    public Result cancelRequest(@PathVariable Long requestId,
                                 @RequestParam Long currentUserId) {
 
         // 调用业务层取消绑定申请
         bindRequestService.cancelRequest(requestId, currentUserId);
 
-        return "绑定申请已取消";
+        // 返回成功结果
+        return new Result(StatusCode.OK, "绑定申请已取消");
     }
 
 }

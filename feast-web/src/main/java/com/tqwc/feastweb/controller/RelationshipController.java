@@ -1,6 +1,8 @@
 package com.tqwc.feastweb.controller;
 
 import com.tqwc.feastcommon.entity.Relationship;
+import com.tqwc.feastcommon.utils.Result;
+import com.tqwc.feastcommon.utils.StatusCode;
 import com.tqwc.feastweb.service.RelationshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,13 +33,16 @@ public class RelationshipController {
      * GET /relationship/current?userId=1
      *
      * @param userId 当前用户ID
-     * @return 当前有效情侣关系
+     * @return 统一返回结果，data 中为当前有效关系
      */
     @GetMapping("/current")
-    public Relationship getCurrentRelationship(@RequestParam Long userId) {
+    public Result getCurrentRelationship(@RequestParam Long userId) {
 
         // 调用业务层查询当前有效关系
-        return relationshipService.getActiveRelationshipByUserId(userId);
+        Relationship relationship = relationshipService.getActiveRelationshipByUserId(userId);
+
+        // 返回成功结果，并携带关系数据
+        return new Result(StatusCode.OK, "查询成功", relationship);
     }
 
     /**
@@ -47,15 +52,16 @@ public class RelationshipController {
      * POST /relationship/unbind?currentUserId=1
      *
      * @param currentUserId 当前登录用户ID
-     * @return 返回操作结果
+     * @return 统一返回结果
      */
     @PostMapping("/unbind")
-    public String unbind(@RequestParam Long currentUserId) {
+    public Result unbind(@RequestParam Long currentUserId) {
 
         // 调用业务层解除情侣关系
         relationshipService.unbind(currentUserId);
 
-        return "情侣关系已解除";
+        // 返回成功结果
+        return new Result(StatusCode.OK, "情侣关系已解除");
     }
 
 }
