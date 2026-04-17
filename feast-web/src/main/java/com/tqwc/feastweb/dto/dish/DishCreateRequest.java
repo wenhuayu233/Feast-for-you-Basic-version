@@ -1,6 +1,7 @@
 package com.tqwc.feastweb.dto.dish;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -18,5 +19,6 @@ public class DishCreateRequest {
     private String description;
 
     @Size(max = 255, message = "图片地址长度不能超过255")
+    @Pattern(regexp = "^(https?://).*$", message = "图片地址必须是有效URL")
     private String image;
 }

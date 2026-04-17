@@ -43,6 +43,10 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
 
+        <!-- minio -->
+        <minio.version>8.2.1</minio.version>
+
+
     </properties>
 
     <!-- 统一依赖管理 -->
@@ -53,6 +57,13 @@
                 <groupId>com.tqwc</groupId>
                 <artifactId>feast-jwt</artifactId>
                 <version>${revision}</version>
+            </dependency>
+
+            <!-- 对象存储 Minio -->
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
             </dependency>
 
 
