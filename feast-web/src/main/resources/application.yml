@@ -46,3 +46,12 @@ security:
     secret: "feast-for-you-jwt-secret-change-me-2026"
     expiration-seconds: 259200
     cookie-name: "FFY_TOKEN"
+
+#=================================================================
+# minio
+#=================================================================
+minio:
+  endpoint: http://111.229.181.254:9000
+  accessKey: feastforyou
+  secretKey: feastforyou
+  bucketName: feastforyou
