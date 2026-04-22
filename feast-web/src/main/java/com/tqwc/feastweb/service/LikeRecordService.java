@@ -13,4 +13,13 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface LikeRecordService extends IService<LikeRecord> {
 
+    /**
+     * 点赞（同一用户对同一菜品仅一条记录）。
+     */
+    void addLike(Long dishId, Long userId);
+
+    /**
+     * 取消点赞；若未点赞则静默成功。
+     */
+    void removeLike(Long dishId, Long userId);
 }
