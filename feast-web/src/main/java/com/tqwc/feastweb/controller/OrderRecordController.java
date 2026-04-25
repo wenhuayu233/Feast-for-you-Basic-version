@@ -5,8 +5,11 @@ import com.tqwc.feastcommon.utils.Result;
 import com.tqwc.feastcommon.utils.StatusCode;
 import com.tqwc.feastweb.dto.order.OrderCreateDTO;
 import com.tqwc.feastweb.service.OrderRecordService;
+import com.tqwc.feastweb.utils.MinioUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -35,6 +38,9 @@ public class OrderRecordController {
      */
     @Autowired
     private OrderRecordService orderRecordService;
+
+    @Autowired
+    private MinioUtil minioUtil;
 
     /**
      * 创建订单
@@ -152,12 +158,23 @@ public class OrderRecordController {
      * @param currentUserId 当前登录用户ID
      * @return 统一返回结果
      */
-    @PostMapping("/complete/{orderId}")
+    @PostMapping(value = "/complete/{orderId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public Result completeOrder(@PathVariable Long orderId,
-                                @RequestParam Long currentUserId) {
+                                @RequestParam Long currentUserId,
+                                @RequestParam(value = "file", required = false) MultipartFile file,
+                                @RequestParam(value = "remark", required = false) String remark) {
+
+        String imageUrl = null;
+        if (file != null && !file.isEmpty()) {
+            try {
+                imageUrl = minioUtil.uploadFile(file);
+            } catch (Exception e) {
+                return new Result(StatusCode.ERROR, "成品图片上传失败: " + e.getMessage());
+            }
+        }
 
         // 调用业务层完成订单
-        orderRecordService.completeOrder(orderId, currentUserId);
+        orderRecordService.completeOrder(orderId, currentUserId, imageUrl, remark);
 
         // 返回成功结果
         return new Result(StatusCode.OK, "订单已完成");

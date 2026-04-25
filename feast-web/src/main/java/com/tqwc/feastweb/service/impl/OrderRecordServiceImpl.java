@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -210,10 +211,27 @@ public class OrderRecordServiceImpl extends ServiceImpl<OrderRecordMapper, Order
 
         List<OrderItem> orderItemList = orderItemService.list(wrapper);
 
+        //  查询菜品信息并组装详情项（包含菜名、图片等）
+        List<Map<String, Object>> orderItemDetailList = new ArrayList<>();
+        for (OrderItem orderItem : orderItemList) {
+            Dish dish = dishService.getById(orderItem.getDishId());
+
+            Map<String, Object> itemMap = new HashMap<>();
+            itemMap.put("id", orderItem.getId());
+            itemMap.put("dishId", orderItem.getDishId());
+            itemMap.put("dishName", dish != null ? dish.getName() : "菜品已删除");
+            itemMap.put("dishImage", dish != null ? dish.getImage() : "");
+            itemMap.put("dishFlavor", dish != null ? dish.getFlavor() : "");
+            itemMap.put("quantity", orderItem.getQuantity());
+            itemMap.put("note", orderItem.getNote());
+            orderItemDetailList.add(itemMap);
+        }
+
         //  组装返回结果
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("orderRecord", orderRecord);
         resultMap.put("orderItemList", orderItemList);
+        resultMap.put("orderItemDetailList", orderItemDetailList);
 
         return resultMap;
     }
@@ -254,6 +272,10 @@ public class OrderRecordServiceImpl extends ServiceImpl<OrderRecordMapper, Order
             throw new RuntimeException("无权确认该订单");
         }
 
+        if (orderRecord.getCreatedBy() != null && orderRecord.getCreatedBy().equals(currentUserId)) {
+            throw new RuntimeException("下单人不能确认自己的订单，请让对方确认菜品");
+        }
+
         // 只有待确认状态的订单才能确认
         if (orderRecord.getStatus() == null || !orderRecord.getStatus().equals(OrderStatus.PENDING_CONFIRM)) {
             throw new RuntimeException("当前订单不是待确认状态，无法确认");
@@ -280,7 +302,7 @@ public class OrderRecordServiceImpl extends ServiceImpl<OrderRecordMapper, Order
      */
     @Override
     @Transactional
-    public void completeOrder(Long orderId, Long currentUserId) {
+    public void completeOrder(Long orderId, Long currentUserId, String image, String remark) {
         // 1. 判断订单ID是否为空
         if (orderId == null) {
             throw new RuntimeException("订单ID不能为空");
@@ -308,6 +330,10 @@ public class OrderRecordServiceImpl extends ServiceImpl<OrderRecordMapper, Order
             throw new RuntimeException("无权完成该订单");
         }
 
+        if (orderRecord.getCreatedBy() != null && orderRecord.getCreatedBy().equals(currentUserId)) {
+            throw new RuntimeException("下单人不能完成自己的订单，请让对方上传成品");
+        }
+
         // 6. 只有已确认状态的订单才能完成
         if (orderRecord.getStatus() == null || !orderRecord.getStatus().equals(OrderStatus.CONFIRMED)) {
             throw new RuntimeException("当前订单不是已确认状态，无法完成");
@@ -316,10 +342,18 @@ public class OrderRecordServiceImpl extends ServiceImpl<OrderRecordMapper, Order
         // 7. 更新订单状态为已完成
         orderRecord.setStatus(OrderStatus.COMPLETED);
 
-        // 8. 设置更新时间
+        // 8. 保存成品图和完成备注
+        if (image != null && !image.isBlank()) {
+            orderRecord.setImage(image);
+        }
+        if (remark != null) {
+            orderRecord.setRemark(remark);
+        }
+
+        // 9. 设置更新时间
         orderRecord.setUpdatedTime(LocalDateTime.now());
 
-        // 9. 更新数据库
+        // 10. 更新数据库
         this.updateById(orderRecord);
     }
 

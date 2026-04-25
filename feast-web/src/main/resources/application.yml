@@ -4,10 +4,20 @@ server:
 #DataSource
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://111.229.181.254:13306/feast_for_you?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://111.229.181.254:13306/feast_for_you?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
     password: feastforyou123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # HikariCP 关键修复配置
+    hikari:
+      max-lifetime: 180000   # 3分钟，比MySQL默认8小时短
+      idle-timeout: 60000    # 空闲1分钟释放
+      connection-timeout: 3000 # 获取连接超时3秒，不卡死
+      validation-timeout: 1000
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-test-query: SELECT 1
 
   mail:
     host: smtp.qq.com

@@ -55,7 +55,7 @@ public interface OrderRecordService extends IService<OrderRecord> {
      * @param orderId 订单ID
      * @param currentUserId 当前登录用户ID
      */
-    void completeOrder(Long orderId, Long currentUserId);
+    void completeOrder(Long orderId, Long currentUserId, String image, String remark);
 
     /**
      * 取消订单

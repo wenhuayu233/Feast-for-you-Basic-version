@@ -80,4 +80,16 @@ public class Relationship implements Serializable {
      */
     @TableField("updated_time")
     private LocalDateTime updatedTime;
+
+    /**
+     * 用户1头像（非数据库字段）
+     */
+    @TableField(exist = false)
+    private String user1Avatar;
+
+    /**
+     * 用户2头像（非数据库字段）
+     */
+    @TableField(exist = false)
+    private String user2Avatar;
 }

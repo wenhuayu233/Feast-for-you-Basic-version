@@ -40,10 +40,13 @@ public class RelationshipServiceImpl extends ServiceImpl<RelationshipMapper, Rel
         wrapper.eq(Relationship::getStatus, RelationshipStatus.ACTIVE)
                 .and(w -> w.eq(Relationship::getUser1Id, userId)
                         .or()
-                        .eq(Relationship::getUser2Id, userId));
+                        .eq(Relationship::getUser2Id, userId))
+                .orderByDesc(Relationship::getCreatedTime)
+                .orderByDesc(Relationship::getId)
+                .last("LIMIT 1");
 
-        // 返回一条有效关系记录
-        return this.getOne(wrapper);
+        // 兼容历史脏数据：可能存在多条有效关系，取最新一条避免 selectOne 异常
+        return this.list(wrapper).stream().findFirst().orElse(null);
     }
 
     /**

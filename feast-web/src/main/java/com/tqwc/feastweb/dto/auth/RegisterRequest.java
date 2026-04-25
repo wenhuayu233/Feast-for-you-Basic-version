@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @Data
 public class RegisterRequest {
     @NotBlank(message = "用户名不能为空")
@@ -19,4 +21,13 @@ public class RegisterRequest {
     @Size(min = 6, max = 100, message = "密码长度需在6-100之间")
     private String password;
 
+    private String nickname;
+    private String gender;
+    private String avatar;
+    private String bio;
+    private String phone;
+    private LocalDate birthday;
+    private String city;
+    private String address;
+    private String occupation;
 }

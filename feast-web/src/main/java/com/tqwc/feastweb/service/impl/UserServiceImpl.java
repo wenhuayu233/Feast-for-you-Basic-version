@@ -2,6 +2,8 @@ package com.tqwc.feastweb.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tqwc.feastcommon.entity.User;
+import com.tqwc.feastweb.dto.auth.RegisterRequest;
+import com.tqwc.feastweb.dto.auth.UpdateProfileRequest;
 import com.tqwc.feastweb.mapper.UserMapper;
 import com.tqwc.feastweb.service.UserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -30,7 +32,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public User register(String username, String email, String rawPassword) {
+    public User register(RegisterRequest request) {
+        String username = request.getUsername();
+        String email = request.getEmail();
         LambdaQueryWrapper<User> userNameQuery = new LambdaQueryWrapper<>();
         userNameQuery.eq(User::getUsername, username);
         if (this.count(userNameQuery) > 0) {
@@ -46,8 +50,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = new User();
         user.setUsername(username);
         user.setEmail(email);
-        user.setPassword(passwordEncoder.encode(rawPassword));
-        user.setNickname(username);
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setNickname(Objects.nonNull(request.getNickname()) && !request.getNickname().isBlank() ? request.getNickname() : username);
+        user.setGender(request.getGender());
+        user.setAvatar(request.getAvatar());
+        user.setBio(request.getBio());
         user.setStatus(1);
         this.save(user);
         return user;
@@ -71,6 +78,35 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!passwordEncoder.matches(rawPassword, user.getPassword())) {
             throw new IllegalArgumentException("账号或密码错误");
         }
+        return user;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public User updateProfile(Long userId, UpdateProfileRequest request) {
+        User user = this.getById(userId);
+        if (Objects.isNull(user)) {
+            throw new IllegalArgumentException("用户不存在");
+        }
+
+        String newEmail = request.getEmail();
+        if (Objects.nonNull(newEmail) && !newEmail.isBlank() && !Objects.equals(newEmail, user.getEmail())) {
+            LambdaQueryWrapper<User> emailQuery = new LambdaQueryWrapper<>();
+            emailQuery.eq(User::getEmail, newEmail).ne(User::getId, userId);
+            if (this.count(emailQuery) > 0) {
+                throw new IllegalArgumentException("邮箱已被注册");
+            }
+            user.setEmail(newEmail);
+        }
+
+        if (Objects.nonNull(request.getNickname())) {
+            user.setNickname(request.getNickname().isBlank() ? user.getUsername() : request.getNickname());
+        }
+        if (Objects.nonNull(request.getAvatar())) {
+            user.setAvatar(request.getAvatar());
+        }
+
+        this.updateById(user);
         return user;
     }
 }

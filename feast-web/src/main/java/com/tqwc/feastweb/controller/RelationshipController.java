@@ -1,9 +1,11 @@
 package com.tqwc.feastweb.controller;
 
 import com.tqwc.feastcommon.entity.Relationship;
+import com.tqwc.feastcommon.entity.User;
 import com.tqwc.feastcommon.utils.Result;
 import com.tqwc.feastcommon.utils.StatusCode;
 import com.tqwc.feastweb.service.RelationshipService;
+import com.tqwc.feastweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +28,9 @@ public class RelationshipController {
     @Autowired
     private RelationshipService relationshipService;
 
+    @Autowired
+    private UserService userService;
+
     /**
      * 查询当前用户的有效情侣关系
      *
@@ -40,6 +45,12 @@ public class RelationshipController {
 
         // 调用业务层查询当前有效关系
         Relationship relationship = relationshipService.getActiveRelationshipByUserId(userId);
+        if (relationship != null) {
+            User user1 = userService.getById(relationship.getUser1Id());
+            User user2 = userService.getById(relationship.getUser2Id());
+            relationship.setUser1Avatar(user1 == null ? null : user1.getAvatar());
+            relationship.setUser2Avatar(user2 == null ? null : user2.getAvatar());
+        }
 
         // 返回成功结果，并携带关系数据
         return new Result(StatusCode.OK, "查询成功", relationship);

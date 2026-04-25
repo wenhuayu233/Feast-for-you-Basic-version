@@ -13,20 +13,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
-          <entry name="D:/JAVA-related plugins/maven-repository/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-        </processorPath>
-        <module name="feast-common" />
-        <module name="feast-web" />
-      </profile>
-      <profile name="Annotation profile for feast-jwt" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="D:/JAVA-related plugins/maven-repository/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
-          <entry name="D:/JAVA-related plugins/maven-repository/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.42/lombok-1.18.42.jar" />
         </processorPath>
         <module name="feast-jwt" />
+        <module name="feast-common" />
+        <module name="feast-web" />
       </profile>
     </annotationProcessing>
   </component>
