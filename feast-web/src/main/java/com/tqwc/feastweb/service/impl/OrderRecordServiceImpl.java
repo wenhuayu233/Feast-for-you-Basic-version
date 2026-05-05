@@ -249,47 +249,37 @@ public class OrderRecordServiceImpl extends ServiceImpl<OrderRecordMapper, Order
         if (orderId == null) {
             throw new RuntimeException("订单ID不能为空");
         }
-
         // 判断当前用户ID是否为空
         if (currentUserId == null) {
             throw new RuntimeException("当前用户ID不能为空");
         }
-
         // 查询当前用户是否存在有效情侣关系
         Relationship relationship = relationshipService.getActiveRelationshipByUserId(currentUserId);
         if (relationship == null) {
             throw new RuntimeException("当前用户尚未绑定情侣关系");
         }
-
         // 查询订单是否存在
         OrderRecord orderRecord = this.getById(orderId);
         if (orderRecord == null) {
             throw new RuntimeException("订单不存在");
         }
-
         // 判断订单是否属于当前用户所在的情侣关系
         if (!orderRecord.getRelationshipId().equals(relationship.getId())) {
             throw new RuntimeException("无权确认该订单");
         }
-
         if (orderRecord.getCreatedBy() != null && orderRecord.getCreatedBy().equals(currentUserId)) {
             throw new RuntimeException("下单人不能确认自己的订单，请让对方确认菜品");
         }
-
         // 只有待确认状态的订单才能确认
         if (orderRecord.getStatus() == null || !orderRecord.getStatus().equals(OrderStatus.PENDING_CONFIRM)) {
             throw new RuntimeException("当前订单不是待确认状态，无法确认");
         }
-
         // 更新订单状态为已确认
         orderRecord.setStatus(OrderStatus.CONFIRMED);
-
         // 设置确认时间
         orderRecord.setConfirmedTime(LocalDateTime.now());
-
         // 设置更新时间
         orderRecord.setUpdatedTime(LocalDateTime.now());
-
         // 更新数据库
         this.updateById(orderRecord);
     }

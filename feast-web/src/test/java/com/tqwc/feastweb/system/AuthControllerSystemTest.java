@@ -1,5 +1,6 @@
 package com.tqwc.feastweb.system;
 
+import tools.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tqwc.feastcommon.entity.User;
 import com.tqwc.feast.jwt.JwtTokenProvider;
@@ -8,13 +9,14 @@ import com.tqwc.feastweb.dto.auth.LoginRequest;
 import com.tqwc.feastweb.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
-import org.springframework.test.web.servlet.MockMvc;
+import com.tqwc.feastweb.utils.MinioUtil;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,22 +31,25 @@ class AuthControllerSystemTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private JsonMapper jsonMapper;
 
-    @MockBean
+    @MockitoBean
     private UserService userService;
 
-    @MockBean
+    @MockitoBean
     private JwtTokenProvider jwtTokenProvider;
 
-    @MockBean
+    @MockitoBean
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @MockBean
+    @MockitoBean
     private AuthenticationEntryPoint authenticationEntryPoint;
 
-    @MockBean
+    @MockitoBean
     private AccessDeniedHandler accessDeniedHandler;
+
+    @MockitoBean
+    private MinioUtil minioUtil;
 
     @Test
     void login_shouldReturnSuccessInSystemContext() throws Exception {
@@ -62,7 +67,7 @@ class AuthControllerSystemTest {
 
         mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(request)))
+                        .content(jsonMapper.writeValueAsString(request)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.conde").value(20000))
                 .andExpect(jsonPath("$.message").value("登录成功"))
