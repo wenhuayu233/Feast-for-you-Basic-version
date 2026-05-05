@@ -53,7 +53,8 @@ public class LikeRecordServiceImpl extends ServiceImpl<LikeRecordMapper, LikeRec
         this.remove(wrapper);
     }
 
-    private boolean liked(Long dishId, Long userId) {
+    @Override
+    public boolean liked(Long dishId, Long userId) {
         LambdaQueryWrapper<LikeRecord> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(LikeRecord::getDishId, dishId).eq(LikeRecord::getUserId, userId);
         return this.count(wrapper) > 0;

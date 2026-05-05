@@ -26,4 +26,8 @@ public interface DishService extends IService<Dish> {
     Dish getActiveById(Long id);
 
     List<Dish> listActive();
+
+    List<Dish> listActiveByCreatorIds(List<Long> creatorIds);
+
+    void softDeleteByCreatorIds(List<Long> creatorIds);
 }

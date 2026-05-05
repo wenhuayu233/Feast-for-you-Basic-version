@@ -22,4 +22,6 @@ public interface FavoriteService extends IService<Favorite> {
      * 取消收藏；若未收藏则静默成功。
      */
     void removeFavorite(Long dishId, Long userId);
+
+    boolean favorited(Long dishId, Long userId);
 }
