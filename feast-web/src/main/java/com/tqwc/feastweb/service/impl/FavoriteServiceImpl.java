@@ -53,7 +53,8 @@ public class FavoriteServiceImpl extends ServiceImpl<FavoriteMapper, Favorite> i
         this.remove(wrapper);
     }
 
-    private boolean favorited(Long dishId, Long userId) {
+    @Override
+    public boolean favorited(Long dishId, Long userId) {
         LambdaQueryWrapper<Favorite> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Favorite::getDishId, dishId).eq(Favorite::getUserId, userId);
         return this.count(wrapper) > 0;

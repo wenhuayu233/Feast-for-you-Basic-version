@@ -4,11 +4,14 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.tqwc.feastcommon.constant.RelationshipStatus;
 import com.tqwc.feastcommon.entity.Relationship;
 import com.tqwc.feastweb.mapper.RelationshipMapper;
+import com.tqwc.feastweb.service.DishService;
 import com.tqwc.feastweb.service.RelationshipService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -21,6 +24,12 @@ import java.util.UUID;
  */
 @Service
 public class RelationshipServiceImpl extends ServiceImpl<RelationshipMapper, Relationship> implements RelationshipService {
+
+    private final DishService dishService;
+
+    public RelationshipServiceImpl(DishService dishService) {
+        this.dishService = dishService;
+    }
 
     /**
      * 根据用户ID查询当前有效的情侣关系
@@ -93,6 +102,7 @@ public class RelationshipServiceImpl extends ServiceImpl<RelationshipMapper, Rel
      * @param currentUserId 当前登录用户ID
      */
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void unbind(Long currentUserId) {
 
         // 先查询当前用户是否存在有效关系
@@ -114,6 +124,9 @@ public class RelationshipServiceImpl extends ServiceImpl<RelationshipMapper, Rel
 
         // 更新数据库
         this.updateById(relationship);
+
+        // 解除关系后，清理这段情侣关系下双方共同维护的菜单。
+        dishService.softDeleteByCreatorIds(List.of(relationship.getUser1Id(), relationship.getUser2Id()));
     }
 
 }

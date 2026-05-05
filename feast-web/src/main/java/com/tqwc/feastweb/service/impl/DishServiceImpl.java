@@ -93,4 +93,29 @@ public class DishServiceImpl extends ServiceImpl<DishMapper, Dish> implements Di
         wrapper.eq(Dish::getStatus, STATUS_ACTIVE).orderByDesc(Dish::getUpdatedTime);
         return this.list(wrapper);
     }
+
+    @Override
+    public List<Dish> listActiveByCreatorIds(List<Long> creatorIds) {
+        if (Objects.isNull(creatorIds) || creatorIds.isEmpty()) {
+            return List.of();
+        }
+        LambdaQueryWrapper<Dish> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Dish::getStatus, STATUS_ACTIVE)
+                .in(Dish::getCreatedBy, creatorIds)
+                .orderByDesc(Dish::getUpdatedTime);
+        return this.list(wrapper);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void softDeleteByCreatorIds(List<Long> creatorIds) {
+        if (Objects.isNull(creatorIds) || creatorIds.isEmpty()) {
+            return;
+        }
+        LambdaUpdateWrapper<Dish> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.in(Dish::getCreatedBy, creatorIds)
+                .eq(Dish::getStatus, STATUS_ACTIVE)
+                .set(Dish::getStatus, STATUS_INACTIVE);
+        this.update(wrapper);
+    }
 }

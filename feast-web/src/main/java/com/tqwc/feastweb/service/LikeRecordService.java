@@ -22,4 +22,6 @@ public interface LikeRecordService extends IService<LikeRecord> {
      * 取消点赞；若未点赞则静默成功。
      */
     void removeLike(Long dishId, Long userId);
+
+    boolean liked(Long dishId, Long userId);
 }
