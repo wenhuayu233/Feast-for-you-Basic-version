@@ -4,9 +4,9 @@ server:
 #DataSource
 spring:
   datasource:
-    url: jdbc:mysql://111.229.181.254:13306/feast_for_you?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
-    password: feastforyou123456
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     # HikariCP 关键修复配置
@@ -61,7 +61,7 @@ security:
 # minio
 #=================================================================
 minio:
-  endpoint: http://111.229.181.254:9000
-  accessKey: feastforyou
-  secretKey: feastforyou
-  bucketName: feastforyou
+  endpoint:
+  accessKey:
+  secretKey:
+  bucketName:

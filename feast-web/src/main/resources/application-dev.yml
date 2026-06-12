@@ -5,9 +5,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://111.229.181.254:13306/feast_for_you?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
-    password: feastforyou123456
+    password: 123456
   mail:
     host: smtp.qq.com
     port: 587
@@ -55,10 +55,10 @@ security:
 # minio
 #=================================================================
 minio:
-  endpoint: http://111.229.181.254:9000
-  accessKey: feastforyou
-  secretKey: feastforyou
-  bucketName: feastforyou
+  endpoint:
+  accessKey:
+  secretKey:
+  bucketName:
 
 
 
