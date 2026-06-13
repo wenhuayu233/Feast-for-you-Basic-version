@@ -51,14 +51,23 @@ security:
     expiration-seconds: 259200
     cookie-name: "FFY_TOKEN"
 
-#=================================================================
+
 # minio
-#=================================================================
 minio:
   endpoint:
   accessKey:
   secretKey:
   bucketName:
+
+
+# AI
+ai:
+  wenxin:
+    enabled: true
+    base-url:
+    app-id:
+    secret-key:
+    timeout-seconds: 30
 
 
 

@@ -4,7 +4,7 @@ server:
 #DataSource
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://localhost:3306/feast_for_you?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -57,11 +57,19 @@ security:
     expiration-seconds: 259200
     cookie-name: "FFY_TOKEN"
 
-#=================================================================
+
 # minio
-#=================================================================
 minio:
   endpoint:
   accessKey:
   secretKey:
   bucketName:
+
+# AI
+ai:
+  wenxin:
+    enabled: true
+    base-url:
+    app-id:
+    secret-key:
+    timeout-seconds: 30
